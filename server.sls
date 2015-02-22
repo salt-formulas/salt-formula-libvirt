@@ -27,6 +27,6 @@ libvirt_service:
   - enable: true
   - reload: true
   - watch:
-    - file: libvirt_config
+    - file: libvirtd_config
 
 {%- endif %}
