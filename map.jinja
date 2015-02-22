@@ -1,0 +1,14 @@
+{% set server = salt['grains.filter_by']({
+    'Debian': {
+        'pkgs': ['libvirt-bin','pm-utils','libvirt0','qemu-kvm','qemu-utils','bridge-utils','libvirt-python'],
+        'service': 'libvirt-bin',
+        'config': '/etc/libvirt/libvirtd.conf',
+        'config_sys': '/etc/default/libvirt-bin'
+    },
+    'RedHat': {
+        'pkgs': ['libvirt','qemu-kvm'],
+        'service': 'libvirtd',
+        'config': '/etc/libvirt/libvirtd.conf',
+        'config_sys': '/etc/sysconfig/libvirtd'
+    },
+}, merge=salt['pillar.get']('libvirt:server')) %}

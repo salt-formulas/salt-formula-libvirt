@@ -2,6 +2,9 @@
 
 ## Sample pillar
 
-    kvm:
-      hostnode:
+    libvirt:
+      server:
         enabled: true
+
+## Resources
+* https://github.com/bechtoldt/saltstack-libvirt-formula
