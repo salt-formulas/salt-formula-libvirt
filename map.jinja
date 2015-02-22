@@ -1,6 +1,6 @@
 {% set server = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['libvirt-bin','pm-utils','libvirt0','qemu-kvm','qemu-utils','bridge-utils','libvirt-python'],
+        'pkgs': ['libvirt-bin','pm-utils','libvirt0','qemu-kvm','qemu-utils','bridge-utils','python-libvirt'],
         'service': 'libvirt-bin',
         'config': '/etc/libvirt/libvirtd.conf',
         'config_sys': '/etc/default/libvirt-bin'
