@@ -14,12 +14,27 @@ libvirtd_config:
   - require:
     - pkg: libvirt_packages
 
+{%- if grains.os_family == 'RedHat' %}
+
 libvirt_sysconfig:
-  file.append:
-  - name: {{ server.config_sys }}
-  - text: 'LIBVIRTD_ARGS="--listen"'
+  file.managed:
+  - name: /etc/sysconfig/libvirtd
+  - contents: 'LIBVIRTD_ARGS="--listen"'
   - require:
     - pkg: libvirt_packages
+
+{%- endif %}
+
+{%- if grains.os_family == 'Debian' %}
+
+/etc/default/libvirt-bin:
+  file.managed:
+  - source: salt://libvirt/files/libvirt-bin
+  - contents: 'LIBVIRTD_ARGS="--listen"'
+  - require:
+    - pkg: libvirt_packages
+
+{%- endif %}
 
 libvirt_service:
   service.running:
