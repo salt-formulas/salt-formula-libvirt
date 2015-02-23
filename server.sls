@@ -30,7 +30,6 @@ libvirt_sysconfig:
 /etc/default/libvirt-bin:
   file.managed:
   - source: salt://libvirt/files/libvirt-bin
-  - contents: 'LIBVIRTD_ARGS="--listen"'
   - require:
     - pkg: libvirt_packages
 
