@@ -44,3 +44,11 @@ libvirt_service:
     - file: libvirtd_config
 
 {%- endif %}
+
+{%- if netcfg.disabled %}
+
+/etc/libvirt/qemu/networks/default.xml:
+  file.managed.absent:
+
+{%- endif %}
+
