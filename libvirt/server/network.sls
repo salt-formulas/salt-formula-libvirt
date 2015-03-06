@@ -4,7 +4,7 @@
 include:
 - libvirt.server.service
 
-{%- for name, network server:networks.iteritems() %}
+{%- for name, network in server.network.iteritems() %}
 
 {%- set network_config_file = '/etc/libvirt/qemu/networks' ~ '/' ~ name ~ '.xml' %}
 
