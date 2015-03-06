@@ -1,0 +1,81 @@
+
+=======
+Libvirt
+=======
+
+Sample pillars
+==============
+
+simple libvirt server
+
+
+.. code-block:: yaml
+
+    libvirt:
+      server:
+        enabled: true
+
+.. code-block:: yaml
+
+    libvirt:
+      server:
+        enabled: true
+        network:
+          default:
+            ensure: absent #present, running, stopped, absent
+          mydefault:
+            xml: |
+              <network>
+                <name>mydefault</name>
+                <bridge name="virbr0"/>
+                <forward/>
+                <ip address="192.168.122.1" netmask="255.255.255.0">
+                  <dhcp>
+                    <range start="192.168.122.2" end="192.168.122.254"/>
+                  </dhcp>
+                </ip>
+              </network>
+          ovs-net:
+            autostart: False
+            xml: |
+              <network>
+                <name>ovs-net</name>
+                <forward mode='bridge'/>
+                <bridge name='ovsbr0'/>
+                <virtualport type='openvswitch'>
+                  <parameters interfaceid='09b11c53-8b5c-4eeb-8f00-d84eaa0aaa4f'/>
+                </virtualport>
+              </network>
+
+.. code-block:: yaml
+
+    libvirt:
+      server:
+        enabled: true
+        pool:
+          virtimages:
+            type: dir
+            path: /var/lib/libvirt/images
+            xml: |
+              <pool type="dir">
+                <name>virtimages</name>
+                  <target>
+                    <path>/var/lib/libvirt/images</path>
+                  </target>
+              </pool>
+          virtimages2:
+            ensure: absent
+            type: dir
+            path: /var/lib/libvirt/images2
+            xml: |
+              <pool type="dir">
+                <name>virtimages2</name>
+                  <target>
+                    <path>/var/lib/libvirt/images2</path>
+                  </target>
+              </pool>
+
+Read more
+=========
+
+* https://github.com/bechtoldt/saltstack-libvirt-formula
