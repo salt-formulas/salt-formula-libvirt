@@ -14,6 +14,11 @@ simple libvirt server
     libvirt:
       server:
         enabled: true
+        virtualization:
+        - kvm
+        network:
+          default:
+            ensure: absent
 
 .. code-block:: yaml
 
