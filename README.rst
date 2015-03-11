@@ -14,7 +14,7 @@ simple libvirt server
     libvirt:
       server:
         enabled: true
-        virtualization:
+        virtualizations:
         - kvm
         network:
           default:
