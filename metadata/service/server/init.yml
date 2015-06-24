@@ -1,0 +1,6 @@
+applications:
+- libvirt
+parameters:
+  libvirt:
+    server:
+      enabled: true

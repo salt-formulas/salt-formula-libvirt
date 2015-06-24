@@ -1,0 +1,11 @@
+applications:
+- libvirt
+parameters:
+  libvirt:
+    server:
+      enabled: true
+      virtualizations:
+      - kvm
+      network:
+        default:
+          ensure: absent
