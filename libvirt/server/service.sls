@@ -5,17 +5,9 @@ libvirt_packages:
   pkg.installed:
   - names: {{ server.pkgs }}
 
-{%- for virtualization in server.virtualizations %}
-
-{%- if virtualization == 'kvm' %}
-
 libvirt_kvm_packages:
   pkg.installed:
   - names: {{ server.kvm_pkgs }}
-
-{%- endif %}
-
-{%- endfor %}
 
 libvirt_config:
   file.managed:
