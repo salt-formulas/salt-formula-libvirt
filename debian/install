@@ -1,2 +1,0 @@
-libvirt/*             /usr/share/salt-formulas/env/libvirt/
-metadata/service/*      /usr/share/salt-formulas/reclass/service/libvirt/
