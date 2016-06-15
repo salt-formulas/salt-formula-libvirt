@@ -1,0 +1,8 @@
+name: libvirt
+os: Debian, RedHat
+os_family: Debian, RedHat
+version: 201606
+release: 1
+summary: Salt salt formula
+description: Install and configure Salt masters and minions.
+top_level_dir: libvirt
