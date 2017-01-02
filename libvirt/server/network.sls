@@ -15,7 +15,7 @@ include:
   - mode: 600
   - user: root
   - group: root
-  - contents_pillar: libvirt:networks:{{ name }}:xml
+  - contents_pillar: libvirt:server:network:{{ name }}:xml
   - watch_in:
     - service: libvirt_service
 
