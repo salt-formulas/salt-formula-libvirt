@@ -43,10 +43,22 @@ libvirt_sysconfig:
 /etc/default/libvirt-bin:
   file.managed:
   - source: salt://libvirt/files/libvirt-bin
+  - template: jinja
   - require:
     - pkg: libvirt_packages
   - watch_in:
     - service: libvirt_service
+{%- if grains.get('init', None) == 'systemd' %}
+
+libvirt_restart_systemd:
+  module.wait:
+  - name: service.systemctl_reload
+  - watch:
+    - file: /etc/default/libvirt-bin
+  - require_in:
+    - service: libvirt_service
+
+{%- endif %}
 
 {%- endif %}
 
