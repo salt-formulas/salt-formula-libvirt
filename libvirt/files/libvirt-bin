@@ -5,7 +5,14 @@
 start_libvirtd="yes"
 
 # options passed to libvirtd, add "-l" to listen on tcp
+{%- if grains.get('init', None) != 'systemd' %}
+
 libvirtd_opts="-d -l"
+{%- else %}
+# Don't use "-d" option with systemd
+
+libvirt_opts="-l"
+{%- endif %}
 
 # pass in location of kerberos keytab
 #export KRB5_KTNAME=/etc/libvirt/libvirt.keytab
