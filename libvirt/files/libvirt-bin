@@ -11,7 +11,7 @@ libvirtd_opts="-d -l"
 {%- else %}
 # Don't use "-d" option with systemd
 
-libvirt_opts="-l"
+libvirtd_opts="-l"
 {%- endif %}
 
 # pass in location of kerberos keytab
