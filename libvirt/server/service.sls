@@ -66,7 +66,6 @@ libvirt_service:
   service.running:
   - name: {{ server.service }}
   - enable: true
-  - reload: true
   - watch:
     - file: libvirt_config
 
