@@ -19,6 +19,8 @@ include:
   - watch_in:
     - service: libvirt_service
 
+{%- if grains.get('virtual_subtype', None) not in ['Docker', 'LXC'] %}
+
 net-{{ name }}:
   cmd.run:
   - name: virsh net-define {{ network_config_file }}
@@ -37,6 +39,8 @@ net-startstop-{{ name }}:
   cmd.run:
   - name: virsh net-start {{ name }}
   - unless: virsh -q net-list --all | grep -Eq '^{{ name }}\s+active'
+
+{%- endif %}
 
 {%- elif network.ensure|default('running') == 'absent' %}
 
