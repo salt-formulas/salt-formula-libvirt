@@ -1,0 +1,54 @@
+---
+driver:
+  name: docker
+  hostname: libvirt.ci.local
+  use_sudo: false
+
+provisioner:
+  name: salt_solo
+  salt_install: bootstrap
+  salt_bootstrap_url: https://bootstrap.saltstack.com
+  salt_version: latest
+  require_chef: false
+  log_level: error
+  formula: libvirt
+  grains:
+    noservices: True
+  state_top:
+    base:
+      "*":
+        - libvirt
+  pillars:
+    top.sls:
+      base:
+        "*":
+          - libvirt
+
+verifier:
+  name: inspec
+  sudo: true
+
+
+platforms:
+  - name: <%=ENV['PLATFORM'] || 'ubuntu-xenial'%>
+    driver_config:
+      image: <%=ENV['PLATFORM'] || 'trevorj/salty-whales:xenial'%>
+      platform: ubuntu
+
+suites:
+
+  - name: network
+    provisioner:
+      pillars-from-files:
+        libvirt.sls: tests/pillar/network.sls
+
+  - name: pool
+    provisioner:
+      pillars-from-files:
+        libvirt.sls: tests/pillar/pool.sls
+
+  - name: simple
+    provisioner:
+      pillars-from-files:
+        libvirt.sls: tests/pillar/simple.sls
+# vim: ft=yaml sw=2 ts=2 sts=2 tw=125
