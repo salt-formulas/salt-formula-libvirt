@@ -18,23 +18,30 @@ include:
   - user: root
   - group: root
   - contents_pillar: libvirt:server:pool:{{ name }}:xml
-  - watch_in:
-    - service: libvirt_service
+  - require_in:
+    - cmd: libvirt_virsh_pool_{{ name }}
 
 libvirt_virsh_pool_{{ name }}:
   cmd.run:
-  - name: virsh pool-define {{ name }}
+  - name: virsh pool-define {{ storage_config_file }}
   - unless: virsh -q pool-list --all | grep -Eq '^\s*{{ name }}'
+  - require:
+    - pkg: libvirt_packages
+    - service: libvirt_service
 
-libvirt_pool_virsh_autostart_{{ name }}:
+libvirt_virsh_pool_autostart_{{ name }}:
   cmd.run:
   - name: virsh pool-autostart {{ name }}
   - unless: virsh pool-info {{ name }} | grep -Eq '^Autostart:\s+yes'
+  - require:
+    - cmd: libvirt_virsh_pool_{{ name }}
 
 libvirt_virsh_pool_startstop_{{ name }}:
   cmd.run:
   - name: virsh pool-start {{ name }}
   - unless: virsh -q pool-list --all | grep -Eq '^\s*{{ name }}\s+active'
+  - require_in:
+    - cmd: libvirt_virsh_pool_autostart_{{ name }}
 {% endif %}
 {% endfor %}
 {% endif %}
