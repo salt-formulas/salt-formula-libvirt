@@ -51,8 +51,8 @@ net-startstop-{{ name }}:
 
 net-{{ name }}:
   cmd.run:
-  - name: virsh net-destroy {{ name }} 2>&1 1>/dev/null; virsh net-undefine {{ name }}
-  - onlyif: virsh -q net-list --all | grep -q '^\s*{{ name }}'
+  - name: virsh net-undefine {{ name }};virsh net-destroy {{ name }} 2>&1 1>/dev/null
+  - onlyif: virsh -q net-list --all | grep -Eq '^\s*{{ name }}'
 
 net-autostart-{{ name }}:
   cmd.run:
