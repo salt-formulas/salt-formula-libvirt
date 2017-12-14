@@ -29,19 +29,18 @@ libvirt_config:
 
 libvirt_sysconfig:
   file.managed:
-  - name: /etc/sysconfig/libvirtd
+  - name: {{ server.config_sys }}
   - contents: 'LIBVIRTD_ARGS="--listen"'
   - require:
     - pkg: libvirt_packages
   - watch_in:
     - service: libvirt_service
 
-{%- endif %}
+{%- elif grains.os_family == 'Debian' %}
 
-{%- if grains.os_family == 'Debian' %}
-
-/etc/default/libvirt-bin:
+libvirt_sysconfig:
   file.managed:
+  - name: {{ server.config_sys }}
   - source: salt://libvirt/files/libvirt-bin
   - template: jinja
   - require:
@@ -54,7 +53,7 @@ libvirt_restart_systemd:
   module.wait:
   - name: service.systemctl_reload
   - watch:
-    - file: /etc/default/libvirt-bin
+    - file: libvirt_sysconfig
   - require_in:
     - service: libvirt_service
 

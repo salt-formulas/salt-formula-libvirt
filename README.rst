@@ -14,6 +14,7 @@ simple libvirt server
     libvirt:
       server:
         enabled: true
+        unix_sock_group: libvirt
         virtualizations:
         - kvm
         network:
