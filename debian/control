@@ -10,6 +10,6 @@ Vcs-Git: https://github.com/tcpcloud/salt-formula-libvirt.git
 
 Package: salt-formula-libvirt
 Architecture: all
-Depends: ${misc:Depends}, salt-master, reclass
+Depends: ${misc:Depends}
 Description: Salt salt formula
  Install and configure Salt masters and minions.
