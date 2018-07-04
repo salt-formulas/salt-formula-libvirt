@@ -24,21 +24,21 @@ include:
 net-{{ name }}:
   cmd.run:
   - name: virsh net-define {{ network_config_file }}
-  - unless: virsh -q net-list --all | grep -q '^\s*{{ name }}'
+  - unless: virsh net-list --name --all | grep -w "{{ name }}"
 
 {%- if network.autostart|default(True) %}
 
 net-autostart-{{ name }}:
   cmd.run:
   - name: virsh net-autostart {{ name }}
-  - unless: virsh net-info {{ name }} | grep -Eq '^Autostart:\s+yes'
+  - unless: virsh net-list --name --all --autostart | grep -w "{{ name }}"
 
 {%- endif %}
 
 net-startstop-{{ name }}:
   cmd.run:
   - name: virsh net-start {{ name }}
-  - unless: virsh -q net-list --all | grep -Eq '^\s*{{ name }}\s+active'
+  - unless: virsh net-list --name | grep -w "{{ name }}"
 
 {%- endif %}
 
@@ -52,17 +52,17 @@ net-startstop-{{ name }}:
 net-{{ name }}:
   cmd.run:
   - name: virsh net-undefine {{ name }};virsh net-destroy {{ name }} 2>&1 1>/dev/null
-  - onlyif: virsh -q net-list --all | grep -Eq '^\s*{{ name }}'
+  - onlyif: virsh net-list --all --name | grep -w "{{ name }}"
 
 net-autostart-{{ name }}:
   cmd.run:
   - name: virsh net-autostart {{ name }} --disable
-  - onlyif: virsh net-info {{ name }} | grep -Eq '^Autostart:\s+yes'
+  - onlyif: virsh net-list --all --autostart --name | grep -w "{{ name }}"
 
 net-startstop-{{ name }}:
   cmd.run:
   - name: virsh net-destroy {{ name }}
-  - onlyif: virsh -q net-list --all | grep -Eq '^\s*{{ name }}\s+active'
+  - onlyif: virsh net-list --all --name | grep -w "{{ name }}"
 
 {%- endif %}
 
