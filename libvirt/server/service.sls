@@ -19,8 +19,8 @@ libvirt_kvm_packages:
 
 libvirt_config:
   file.managed:
-  - name: {{ server.config }}
-  - source: salt://libvirt/files/libvirtd.conf.{{ grains.os_family }}
+  - name: {{ server.config.file }}
+  - source: salt://libvirt/files/libvirtd.conf
   - template: jinja
   - require:
     - pkg: libvirt_packages

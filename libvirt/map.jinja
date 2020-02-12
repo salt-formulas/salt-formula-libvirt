@@ -3,14 +3,21 @@
         'pkgs': ['libvirt-bin','pm-utils','libvirt0','python-libvirt'],
         'kvm_pkgs': ['qemu-kvm','qemu-utils'],
         'service': 'libvirt-bin',
-        'config': '/etc/libvirt/libvirtd.conf',
-        'config_sys': '/etc/default/libvirt-bin'
+        'config': {
+            'file': '/etc/libvirt/libvirtd.conf',
+            'auth_tcp': 'none',
+            'listen_tls': 0,
+            'listen_tcp': 1
+        },
+        'config_sys': '/etc/default/libvirt-bin',
     },
     'RedHat': {
         'pkgs': ['libvirt'],
         'kvm_pkgs': ['qemu-kvm'],
         'service': 'libvirtd',
-        'config': '/etc/libvirt/libvirtd.conf',
+        'config': {
+            'file': '/etc/libvirt/libvirtd.conf'
+        },
         'config_sys': '/etc/sysconfig/libvirtd'
     },
 }, merge=salt['pillar.get']('libvirt:server')) %}
